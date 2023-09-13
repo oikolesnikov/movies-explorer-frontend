@@ -25,6 +25,7 @@ const SearchFilm = ({ className = "" }) => {
             type="text"
             placeholder="Фильм"
             className="search-film__input"
+            required
           />
         </div>
         <button className="search-film__button">

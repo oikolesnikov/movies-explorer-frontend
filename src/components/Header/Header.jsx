@@ -10,11 +10,11 @@ const Header = ({ isLoggedIn = true }) => {
   return (
     <header className="header">
       <Logo />
-      {}
+      {/* навигация авторизованного пользователя */}
       <div className="header__loggedin-nav-wrapper">
         {isLoggedIn ? <Navigation links={navLinks} /> : ""}
       </div>
-      {}
+      {/* навигация неавторизованного пользователя */}
       {!isLoggedIn ? (
         <nav className="header__auth-nav">
           <ul className="header__nav-list">
@@ -33,7 +33,7 @@ const Header = ({ isLoggedIn = true }) => {
       ) : (
         <ProfileLink className={"header__profile-link"} />
       )}
-      {}
+      {/* бургер-меню */}
       {isLoggedIn ? <BurgerMenu /> : ""}
     </header>
   );
