@@ -1,11 +1,110 @@
-.navigation {
+.navigation{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.navigation__list {
-  display: flex;
-  gap: 16px;
-  margin: 0;
+.navigation__nav-link-profile {
+  width: 100px;
+  height: 32px;
+  border-radius: 20px;
+  background: #313131;
+  color: #FFF;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.14;
+  border: none;
+}
+
+.navigation__nav-link {
+  color: #FFF;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.33;
+  text-decoration: none;
+}
+
+.navigation__nav-link-item {
+  list-style-type: none;
   padding: 0;
-  list-style: none;
-  white-space: nowrap;
+  display: flex;
+  padding-left: 30px;
+}
+
+
+.navigation__nav-link-item:first-of-type {
+  padding-left: 60px;
+}
+
+.navigation__nav-link_active {
+  font-weight: 500;
+}
+
+.navigation__nav-link-list {
+  padding: 0;
+  display: flex;
+  margin: 0;
+  width: 100%;
+  justify-content: center;
+}
+
+.navigation__nav-menu {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .navigation__nav-menu {
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease 0s;
+    z-index: 90;
+    flex-direction: column;
+    background-color: #202020;
+    max-width: 520px;
+    align-items: center;
+    padding: 160px 0 90px;
+  }
+
+  .navigation__nav-menu_active {
+    right: 0
+  }
+
+  .navigation__nav-link-list {
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+  }
+
+  .navigation__nav-link {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.22;
+    padding-bottom: 4px;
+  }
+
+  .navigation__nav-link_active {
+    border-bottom: 2px solid #fff;
+  }
+
+  .navigation__nav-link-item,
+  .navigation__nav-link-item:first-of-type {
+    padding-left: 0;
+    margin-bottom: 28px;
+  }
+
+  .navigation__nav-link-item:last-of-type {
+    margin-bottom: 0px;
+  }
 }

@@ -103,17 +103,17 @@ const portfolioLinks = [
   {
     id: 1,
     caption: 'Статичный сайт',
-    url: 'https://github.com/hyardlung/how-to-learn'
+    url: 'https://github.com/oikolesnikov/how-to-learn'
   },
   {
     id: 2,
     caption: 'Адаптивный сайт',
-    url: 'https://github.com/hyardlung/russian-travel'
+    url: 'https://github.com/oikolesnikov/russian-travel'
   },
   {
     id: 3,
     caption: 'Одностраничное приложение',
-    url: 'https://github.com/hyardlung/react-mesto-api-full'
+    url: 'https://github.com/oikolesnikov/react-mesto-api-full-gha'
   },
 ];
 

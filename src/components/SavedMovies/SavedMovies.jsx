@@ -1,6 +1,6 @@
 import React from "react";
 import "./SavedMovies.css";
-import SearchFilm from "../SearchFilm/SearchFilm";
+import SearchFilm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import { savedMovies } from "../../config/links";
 

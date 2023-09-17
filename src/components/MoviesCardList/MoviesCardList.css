@@ -1,52 +1,57 @@
-.movies-card-list {
-  padding: 80px 0 62px;
-  position: relative;
-}
-
-.movies-card-list__empty-text {
-  display: none;
-  font-size: 30px;
-  color: var(--lightgray-text-color);
-  text-align: center;
-}
-
-.movies-card-list__ul {
-  margin: 0;
-  padding: 0;
-  display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  grid-template-rows: auto;
-  column-gap: 20px;
-  row-gap: 33px;
-  list-style: none;
-}
-
-.movies-card-list:before {
-  position: absolute;
-  content: '';
-  top: 0;
-  left: 0;
-  margin-bottom: 80px;
-  height: 1px;
+.movies-cards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  background-color: var(--dark-lines-color);
 }
 
-@media screen and (max-width: 768px) {
-  .movies-card-list__ul {
-    grid-template-rows: 1fr 1fr;
-    row-gap: 34px;
-    column-gap: 30px;
-  }
+.movies-cards__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  row-gap: 58px;
+  column-gap: 30px;
+  margin-top: 80px;
+  width: calc(100% - 70px * 2);
+  max-width: 1140px;
+  margin-bottom: 74px;
 }
 
-@media screen and (max-width: 320px) {
-  .movies-card-list {
-    padding-top: 50px;
+.movies-cards__more-button {
+  background-color: transparent;
+  color: #FFF;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border: 1px solid #424242;
+  border-radius: 5px;
+  width: 320px;
+  height: 36px;
+}
+
+
+@media screen and (max-width: 1024px) {
+  .movies-cards__list {
+    grid-template-columns: 1fr 1fr;
+    width: calc(100% - 30px * 2);
+    row-gap: 45px;
+    margin-bottom: 60px;
   }
 
-  .movies-card-list__ul {
-    row-gap: 18px;
+}
+
+@media screen and (max-width: 650px) {
+  .movies-cards__list {
+    grid-template-columns: 1fr;
+    width: calc(100% - 10px * 2);
+    margin-top: 50px;
+    row-gap: 36px;
+  }
+
+  .movies-cards__more-button {
+    width: 240px;
   }
 }

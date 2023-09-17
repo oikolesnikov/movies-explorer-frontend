@@ -1,22 +1,19 @@
 import React from "react";
-import "./Movies.css";
-import SearchFilm from "../SearchFilm/SearchFilm";
+import movies from "../../utils/Movies";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
-import { movies } from "../../config/links";
+import Preloader from "../Preloader/Preloader";
+import SearchForm from "../SearchForm/SearchForm";
+import "./Movies.css";
 
-const Movies = () => {
+function Movies() {
   return (
     <section className="movies">
-      <div className="movies__container">
-        <SearchFilm className={"movies__search-film"} />
-        <MoviesCardList links={movies} />
-      </div>
-
-      <button className="movies__load-more">
-        <span className="movies__more-caption">Ещё</span>
-      </button>
+      <SearchForm></SearchForm>
+      {/* <Preloader></Preloader> */}
+      <MoviesCardList movies={movies}></MoviesCardList>
     </section>
   );
-};
+}
 
 export default Movies;
+

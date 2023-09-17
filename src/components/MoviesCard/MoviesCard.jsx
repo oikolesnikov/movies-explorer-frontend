@@ -1,27 +1,47 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-import savedCardIcon from "../../images/save-button_state_on.svg";
-import unsavedCardIcon from "../../images/save-button_state_off.svg";
-import deleteCardIcon from "../../images/delete-button.svg";
 import "./MoviesCard.css";
+import { useLocation } from "react-router-dom";
 
-const MoviesCard = ({ _id, url, title, duration }) => {
-  const { pathname } = useLocation();
-  const isSelected = false;
-  const сardIconSaveState = isSelected ? savedCardIcon : unsavedCardIcon;
-  const cardIconState =
-    pathname === "/movies" ? сardIconSaveState : deleteCardIcon;
+function MoviesCard(props) {
+  const handleDeleteClick = () => {
+    console.log();
+  };
+
+  const location = useLocation();
 
   return (
-    <li key={_id} className="movies-card">
-      <img src={url} alt="Тестовая карточка" className="movies-card__img" />
-      <div className="movies-card__description-wrapper">
-        <p className="movies-card__title">{title}</p>
-        <span className="movies-card__duration">{duration}</span>
-        <img src={cardIconState} alt="тест" className="movies-card__icon" />
+    <article className="movie-card">
+      <div className="movie-card__picture">
+        <img
+          src={props.movie.link}
+          alt={props.movie.name}
+          className="movie-card__image"
+        />
+        {props.movie.savedFavorite ? (
+          <button
+            className={
+              location.pathname === "/saved-movies"
+                ? "movie-card__delete movie-card__favorite-position  movie-card__delete-from-saved-movie"
+                : "movie-card__delete movie-card__favorite-position  movie-card__delete-from-movie"
+            }
+          ></button>
+        ) : (
+          <button
+            className="movie-card__favorite movie-card__favorite-position"
+            onClick={handleDeleteClick}
+          >
+            Сохранить
+          </button>
+        )}
       </div>
-    </li>
+      <div className="movie-card__description">
+        <h2 className="movie-card__title">{props.movie.name}</h2>
+        <div className="movie-card__duration-container">
+          <p className="movie-card__duration">{props.movie.duration}</p>
+        </div>
+      </div>
+    </article>
   );
-};
+}
 
 export default MoviesCard;
