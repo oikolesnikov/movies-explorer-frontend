@@ -1,102 +1,94 @@
 .footer {
-  padding: 78px 70px 20px;
-  font-size: 13px;
-  line-height: 1.23;
+  padding: 79px 70px 20px;
+  display: flex;
+  flex-direction: column;
 }
 
-.footer__container {
-  margin: 0 auto;
-  max-width: var(--desktop-container);
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr min-content 1fr;
-  gap: 20px;
-  grid-template-areas:
-    "heading heading"
-    "line line"
-    "year nav-list"
-  ;
-}
-
-.footer__heading {
-  margin: 0;
-  color: var(--lightgray-text-color);
+.footer__text {
   text-align: center;
-  grid-area: heading;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  margin: 0;
+  color: #8b8b8b;
+  padding-bottom: 19px;
+  border-bottom: 1px solid #424242;
 }
 
-.footer__line {
-  height: 1px;
-  grid-area: line;
-
-  background-color: var(--dark-lines-color);
+.footer__copyright {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
 }
 
 .footer__year {
-  grid-area: year;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  margin: 0;
 }
 
-.footer__nav-list {
+.footer__links {
+  display: flex;
+  gap: 21px;
+  list-style-type: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  grid-area: nav-list;
-  list-style: none;
 }
 
 .footer__link {
-  margin-left: 20px;
-  color: var(--light-text-color);
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: #ffffff;
   text-decoration: none;
-  transition: all .3s;
+  transition: opacity 0.8s;
 }
 
 .footer__link:hover {
-  opacity: .6;
-  transition: all .3s;
+  opacity: 0.8;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 950px) {
   .footer {
-    padding: 58px 50px 20px;
+    padding: 76px 30px 20px;
   }
 }
 
 @media screen and (max-width: 500px) {
   .footer {
-    padding: 62px 10px 10px;
+    padding: 80px 10px 20px;
   }
 
-  .footer__container {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(2, min-content) 1fr min-content;
-    grid-template-areas:
-      "heading"
-      "line"
-      "nav-list"
-      "year"
-    ;
-  }
-
-  .footer__heading {
+  .footer__text {
     font-size: 12px;
+    line-height: 15px;
+    padding-bottom: 21px;
   }
 
-  .footer__nav-list {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .footer__link {
-    margin: 0;
-    font-size: 12px;
-    line-height: 2.4;
+  .footer__copyright {
+    display: flex;
+    flex-direction: column-reverse;
+    text-align: center;
+    padding-top: 27px;
   }
 
   .footer__year {
-    text-align: center;
+    font-size: 12px;
+    line-height: 15px;
+    color: #8b8b8b;
+    padding-right: 2px;
+  }
+
+  .footer__links {
+    gap: 9px;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 29px;
+  }
+
+  .footer__link {
+    font-size: 12px;
+    line-height: 15px;
   }
 }

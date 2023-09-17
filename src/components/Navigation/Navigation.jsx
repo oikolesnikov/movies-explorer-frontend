@@ -1,93 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import "./Navigation.css";
-import "../Button/Button.css";
-import "../Link/Link.css";
-import { useLocation } from "react-router-dom";
-import Burger from "../Burger/Burger";
-import Popup from "../Popup/Popup";
+import React from 'react';
+import './Navigation.css';
+import { NavLink } from 'react-router-dom';
+// import account from '../../images/account.svg';
+import Drawer from '../Drawer/Drawer';
 
 function Navigation() {
-  const location = useLocation();
-
-  const [isBurgerOpen, setBurgerOpen] = useState(false);
-
-  const handleBurgerOneClick = () => {
-    if (isBurgerOpen) {
-      setBurgerOpen(false);
-    } else {
-      setBurgerOpen(true);
-    }
-  };
-
-  const handleNavLinkClick = () => {
-    setBurgerOpen(false);
-  };
+  const [opened, setOpened] = React.useState(false);
+  const linkActive = 'navigation__link navigation__active-link';
+  const link = 'navigation__link';
 
   return (
-    <section className="navigation">
-      <Burger
-        handleOneClick={handleBurgerOneClick}
-        isBurgerOpen={isBurgerOpen}
-      ></Burger>
-      <nav
-        className={`navigation__nav-menu ${
-          isBurgerOpen ? "navigation__nav-menu_active" : ""
-        }`}
-      >
-        <ul className="navigation__nav-link-list">
-          {isBurgerOpen ? (
-            <li className="navigation__nav-link-item">
-              <Link
-                to="/"
-                className={
-                  location.pathname === "/"
-                    ? "navigation__nav-link navigation__nav-link_active link"
-                    : "navigation__nav-link link"
-                }
-                onClick={handleNavLinkClick}
-              >
-                Главная
-              </Link>
-            </li>
-          ) : (
-            ""
-          )}
-          <li className="navigation__nav-link-item">
-            <Link
-              to="/movies"
-              className={
-                location.pathname === "/movies"
-                  ? "navigation__nav-link navigation__nav-link_active link"
-                  : "navigation__nav-link link"
-              }
-              onClick={handleNavLinkClick}
-            >
-              Фильмы
-            </Link>
-          </li>
-          <li className="navigation__nav-link-item">
-            <Link
-              to="/saved-movies"
-              className={
-                location.pathname === "/saved-movies"
-                  ? "navigation__nav-link navigation__nav-link_active link"
-                  : "navigation__nav-link link"
-              }
-              onClick={handleNavLinkClick}
-            >
-              Сохранённые фильмы
-            </Link>
-          </li>
-        </ul>
-        <Link to="/profile" className="navigation__nav-link" onClick={handleNavLinkClick}>
-          <button className="navigation__nav-link-profile button">
-            Аккаунт
-          </button>
-        </Link>
-      </nav>
-      <Popup isBurgerOpen={isBurgerOpen}></Popup>
-    </section>
+    <nav className='navigation'>
+      <ul className='navigation__container'>
+        <li className='navigation__content'>
+          <NavLink
+            className={({ isActive }) => (isActive ? linkActive : link)}
+            to='/movies'
+          >
+            Фильмы
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? linkActive : link)}
+            to='/saved-movies'
+          >
+            Сохранённые фильмы
+          </NavLink>
+        </li>
+      </ul>
+      <div className='navigation__account'>
+        <NavLink className='navigation__link' to='/profile'>
+          Аккаунт
+        </NavLink>
+          {/* <div className='navigation__link-account navigation__active-link'>
+            <img
+              src={account}
+              className='navigation__icon-account'
+              alt='Иконка профиля'
+            />
+          </div> */}
+        
+      </div>
+      <div className='navigation__burger'>
+        <div
+          role='button'
+          className='navigation__button-burger'
+          onClick={() => setOpened(true)}
+        >
+          <div className='navigation__line-burger' />
+          <div className='navigation__line-burger' />
+          <div className='navigation__line-burger' />
+        </div>
+        {opened && (
+          <Drawer onClickClose={() => setOpened(false)} />
+        )}
+      </div>
+    </nav>
   );
 }
 

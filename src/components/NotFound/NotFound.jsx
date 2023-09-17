@@ -1,21 +1,25 @@
-import React from "react";
-import { useHistory } from "react-router-dom";
-import "./NonFound.css";
+import React from 'react';
+import './NotFound.css';
+import { useNavigate } from 'react-router-dom';
 
-const NotFound = () => {
-  const history = useHistory();
+function NotFound() {
+  const navigate = useNavigate();
 
   return (
-    <section className="not-found">
-      <div className="not-found__container">
-        <h1 className="not-found__title">404</h1>
-        <p className="not-found__text">Страница не найдена</p>
-        <span onClick={() => history.goBack()} className="not-found__go-back">
+    <main className='not-found'>
+      <section className='not-found__section'>
+        <h1 className='not-found__title'>404</h1>
+        <p className='not-found__text'>Страница не найдена</p>
+        <button
+          type='button'
+          className='not-found__button'
+          onClick={() => navigate('/')}
+        >
           Назад
-        </span>
-      </div>
-    </section>
+        </button>
+      </section>
+    </main>
   );
-};
+}
 
 export default NotFound;

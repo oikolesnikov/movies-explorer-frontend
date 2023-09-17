@@ -1,40 +1,117 @@
-import React from "react";
+import React from 'react';
+import './Profile.css';
+import Header from '../Header/Header';
+import { useNavigate } from 'react-router-dom';
+import useForm from '../../hooks/useForm';
 
-import "./Profile.css";
+function Profile() {
+  const { values, valid, handleChange, error } = useForm();
+  const [edit, setEdit] = React.useState(false);
+  const navigate = useNavigate();
 
-const Profile = () => {
+  function submitForm(e) {
+    e.preventDefault();
+  }
+
+  function handleEdit() {
+    setEdit(!edit);
+  }
+
   return (
-    <section className="profile">
-      <div className="profile__container">
-        <h1 className="profile__title">Привет, username!</h1>
-        <form className="profile__edit-form">
-          <label htmlFor="profile-name" className="profile__label">
-            Имя
-            <input type="text" id="profile-name" className="profile__input" />
-          </label>
-          <div className="profile__divider" />
-          <label htmlFor="profile-email" className="profile__label">
-            E-mail
-            <input type="text" id="profile-email" className="profile__input" />
-          </label>
-          <div className="profile__control">
-            <button
-              type="submit"
-              className="profile__button profile__button_edit-confirm"
-            >
-              Редактировать
-            </button>
-            <button
-              type="button"
-              className="profile__button profile__button_logout"
-            >
-              Выйти из аккаунта
-            </button>
-          </div>
-        </form>
-      </div>
-    </section>
+    <>
+      <Header />
+      <main className='profile'>
+        <section className='profile__section'>
+          <h1 className='profile__title'>Привет, Денис!</h1>
+          <form className='profile__form' onSubmit={submitForm} name='account'>
+            <fieldset className='profile__fieldset profile__fieldset_form'>
+              <label className='profile__name' htmlFor='name'>
+                Имя
+              </label>
+              <input
+                className={`profile__input ${
+                  error.name ? 'profile__user_error' : ''
+                }`}
+                name='name'
+                type='text'
+                minLength='2'
+                maxLength='40'
+                id='name'
+                required
+                placeholder='Денис'
+                onChange={handleChange}
+                value={values.name || ''}
+                disabled={edit ? false : true}
+              />
+            </fieldset>
+            <fieldset className='profile__fieldset profile__fieldset_form'>
+              <label className='profile__name' htmlFor='email'>
+                E-mail
+              </label>
+              <input
+                className={`profile__input ${
+                  error.name ? 'profile__user_error' : ''
+                }`}
+                name='email'
+                type='email'
+                minLength='6'
+                maxLength='40'
+                id='email'
+                required
+                placeholder='pochta@yandex.ru'
+                onChange={handleChange}
+                value={values.email || ''}
+                disabled={edit ? false : true}
+              />
+            </fieldset>
+            {/* ниже код для проверки вывода сообщения */}
+            {/* {!valid ? (
+            <>
+              {edit ? (
+                <span id='name-error' className='profile__error_active'>
+                  При обновлении профиля произошла ошибка.
+                </span>
+              ) : (
+                ''
+              )}
+            </>
+          ) : (
+            ''
+          )} */}
+            {edit && (
+              <button
+                className='profile__save-form'
+                type='submit'
+                disabled={valid ? false : true}
+              >
+                Сохранить
+              </button>
+            )}
+          </form>
+          {edit ? (
+            ''
+          ) : (
+            <>
+              <button
+                className='profile__edit-form'
+                type='button'
+                onClick={handleEdit}
+              >
+                Редактировать
+              </button>
+              <button
+                type='button'
+                className='profile__exit-form'
+                onClick={() => navigate('/')}
+              >
+                Выйти из аккаунта
+              </button>
+            </>
+          )}
+        </section>
+      </main>
+    </>
   );
-};
+}
 
 export default Profile;

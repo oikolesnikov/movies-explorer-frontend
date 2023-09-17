@@ -1,98 +1,89 @@
-import film_pic_1 from '../images/film_pic_1.png'
-import film_pic_2 from '../images/film_pic_2.png'
-import film_pic_3 from '../images/film_pic_3.png'
-import film_pic_4 from '../images/film_pic_4.png'
-import film_pic_5 from '../images/film_pic_5.png'
-import film_pic_6 from '../images/film_pic_6.png'
-import film_pic_7 from '../images/film_pic_7.png'
-import film_pic_8 from '../images/film_pic_8.png'
-import film_pic_9 from '../images/film_pic_9.png'
-import film_pic_10 from '../images/film_pic_10.png'
-import film_pic_11 from '../images/film_pic_11.png'
-import film_pic_12 from '../images/film_pic_12.png'
-
-const movies = [
+export const items = [
   {
-    _id: "1",
-    name: "33 слова о дизайне",
-    link: film_pic_1,
-    duration: "1ч 17м",
-    savedFavorite: true,
+    movieId: 1,
+    nameRU: '33 слова о дизайне',
+    duration: '1ч 17м',
+    image: 'https://i.ibb.co/kH15c8d/1.jpg',
+    trailerLink: 'https://youtu.be/3WaA4oH-5R4',
   },
   {
-    _id: "2",
-    name: "Киноальманах «100 лет дизайна»",
-    link: film_pic_2,
-    duration: "1ч 17м",
-    savedFavorite: true,
-  },{
-    _id: "3",
-    name: "В погоне за Бенкси",
-    link: film_pic_3,
-    duration: "1ч 17м",
-    savedFavorite: true,
-  },{
-    _id: "4",
-    name: "Баския: Взрыв реальности",
-    link: film_pic_4,
-    duration: "1ч 17м",
-    savedFavorite: false,
-  },{
-    _id: "5",
-    name: "Бег это свобода",
-    link: film_pic_5,
-    duration: "1ч 17м",
-    savedFavorite: false,
-  },{
-    _id: "6",
-    name: "Книготорговцы",
-    link: film_pic_6,
-    duration: "1ч 17м",
-    savedFavorite: false,
-  },{
-    _id: "7",
-    name: "Когда я думаю о Германии ночью",
-    link: film_pic_7,
-    duration: "1ч 17м",
-    savedFavorite: false,
-  },{
-    _id: "8",
-    name: "Gimme Danger: История Игги и The Stooges",
-    link: film_pic_8,
-    duration: "1ч 17м",
-    savedFavorite: false,
-  },{
-    _id: "9",
-    name: "Дженис: Маленькая девочка грустит",
-    link: film_pic_9,
-    duration: "1ч 17м",
-    savedFavorite: false,
-  },{
-    _id: "10",
-    name: "Соберись перед прыжком",
-    link: film_pic_10,
-    duration: "1ч 17м",
-    savedFavorite: false,
-  },{
-    _id: "11",
-    name: "Пи Джей Харви: A dog called money",
-    link: film_pic_11,
-    duration: "1ч 17м",
-    savedFavorite: false,
-  },{
-    _id: "12",
-    name: "По волнам: Искусство звука в кино",
-    link: film_pic_12,
-    duration: "1ч 17м",
-    savedFavorite: false,
+    movieId: 2,
+    nameRU: '33 слова о дизайне',
+    duration: '1ч 17м',
+    image: 'https://i.ibb.co/bX41cYx/2.jpg',
+    trailerLink: 'https://youtu.be/3WaA4oH-5R4',
   },
   {
-    _id: "13",
-    name: "test",
-    link: film_pic_12,
-    duration: "1ч 17м",
-    savedFavorite: false,
+    movieId: 3,
+    nameRU: '33 слова о дизайне',
+    duration: '1ч 17м',
+    image: 'https://i.ibb.co/Bqyy2Mw/3.jpg',
+    trailerLink: 'https://youtu.be/3WaA4oH-5R4',
+    isActive: true,
+  },
+  {
+    movieId: 4,
+    nameRU: '33 слова о дизайне',
+    duration: '1ч 17м',
+    image: 'https://i.ibb.co/Yp395Vf/4.jpg',
+    trailerLink: 'https://youtu.be/3WaA4oH-5R4',
+  },
+  {
+    movieId: 5,
+    nameRU: '33 слова о дизайне',
+    duration: '1ч 17м',
+    image: 'https://i.ibb.co/PQFBX21/5.jpg',
+    trailerLink: 'https://youtu.be/3WaA4oH-5R4',
+    isActive: true,
+  },
+  {
+    movieId: 6,
+    nameRU: '33 слова о дизайне',
+    duration: '1ч 17м',
+    image: 'https://i.ibb.co/hfwTHQS/6.jpg',
+    trailerLink: 'https://youtu.be/3WaA4oH-5R4',
+  },
+  {
+    movieId: 7,
+    nameRU: '33 слова о дизайне',
+    duration: '1ч 17м',
+    image: 'https://i.ibb.co/YbnGNx1/7.jpg',
+    trailerLink: 'https://youtu.be/3WaA4oH-5R4',
+  },
+  {
+    movieId: 8,
+    nameRU: '33 слова о дизайне',
+    duration: '1ч 17м',
+    image: 'https://i.ibb.co/HNBHfB9/8.jpg',
+    trailerLink: 'https://youtu.be/3WaA4oH-5R4',
+  },
+  {
+    movieId: 9,
+    nameRU: '33 слова о дизайне',
+    duration: '1ч 17м',
+    image: 'https://i.ibb.co/NxR67tx/9.jpg',
+    trailerLink: 'https://youtu.be/3WaA4oH-5R4',
+  },
+  {
+    movieId: 10,
+    nameRU: '33 слова о дизайне',
+    duration: '1ч 17м',
+    image: 'https://i.ibb.co/HtfbXj4/10.jpg',
+    trailerLink: 'https://youtu.be/3WaA4oH-5R4',
+    isActive: true,
+  },
+  {
+    movieId: 11,
+    nameRU: '33 слова о дизайне',
+    duration: '1ч 17м',
+    image: 'https://i.ibb.co/gwqQ3XH/11.jpg',
+    trailerLink: 'https://youtu.be/3WaA4oH-5R4',
+  },
+  {
+    movieId: 12,
+    nameRU: '33 слова о дизайне',
+    duration: '1ч 17м',
+    image: 'https://i.ibb.co/KhqgpbS/12.jpg',
+    trailerLink: 'https://youtu.be/3WaA4oH-5R4',
   },
 ];
-
-export default movies;

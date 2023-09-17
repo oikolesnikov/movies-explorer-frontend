@@ -1,36 +1,35 @@
-import React, { useEffect, useState } from "react";
-import logo from "../../images/logo.svg";
-import { Link } from "react-router-dom";
-import "./Header.css";
-import Navigation from "../Navigation/Navigation";
-import "../Button/Button.css";
+import React from 'react';
+import './Header.css';
+import Navigation from '../Navigation/Navigation';
+import { Link, useNavigate } from 'react-router-dom';
 
-function Header(props) {
-  // const islogin = false;
-  const islogin = true;
+function Header() {
+  const [loggedIn, setLoggedIn] = React.useState(true);
+  const navigate = useNavigate();
+  console.log(setLoggedIn);
 
   return (
-    <header className="header">
-      <Link to="/" className="header__nav-link button">
-        <img src={logo} alt="Логотип сайта" className="header__logo" />
-      </Link>
-      {islogin ? (
-        <Navigation></Navigation>
+    <header className='header'>
+      <Link className='header__logo' to='/'></Link>
+      {loggedIn ? (
+        <Navigation />
       ) : (
-        <nav className="header__nav-menu">
-          <ul className="header__nav-link-login-list">
-            <li className="header__nav-link-item">
-              <Link to="/signup" className="header__nav-link button">
-                Регистрация
-              </Link>
-            </li>
-            <li className="header__nav-link-item">
-              <Link to="/signin" className="header__nav-link ">
-                <button className="header__nav-link-login button">Войти</button>
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        <div className='header__box'>
+          <button
+            type='button'
+            className='header__button'
+            onClick={() => navigate('/signup')}
+          >
+            Регистрация
+          </button>
+          <button
+            type='button'
+            className='header__button'
+            onClick={() => navigate('/signin')}
+          >
+            Войти
+          </button>
+        </div>
       )}
     </header>
   );
