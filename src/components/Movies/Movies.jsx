@@ -1,33 +1,22 @@
-import React from 'react';
-import './Movies.css';
-import Header from '../Header/Header';
-import SearchForm from './SearchForm/SearchForm';
-import MoviesCardList from './MoviesCardList/MoviesCardList';
-import { items } from '../../utils/movies.js';
-import Preloader from '../Preloader/Preloader';
-import Footer from '../Footer/Footer';
+import React from "react";
+import "./Movies.css";
+import SearchFilm from "../SearchFilm/SearchFilm";
+import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import { movies } from "../../config/links";
 
-function Movies() {
-  const [isLoading, setIsLoading] = React.useState(false);
-  console.log(setIsLoading);
-
+const Movies = () => {
   return (
-    <>
-      {isLoading ? (
-        <Preloader />
-      ) : (
-        <>
-          <Header />
-          <main className='movies'>
-            <SearchForm />
-            <MoviesCardList movies={items} />
-            <button className='movies__button'>Ещё</button>
-          </main>
-          <Footer />
-        </>
-      )}
-    </>
+    <main>
+      <div className="movies__container">
+        <SearchFilm className={"movies__search-film"} />
+        <MoviesCardList links={movies} />
+      </div>
+
+      <button type="button" className="movies__load-more">
+        <span className="movies__more-caption">Ещё</span>
+      </button>
+    </main>
   );
-}
+};
 
 export default Movies;

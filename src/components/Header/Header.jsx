@@ -1,38 +1,58 @@
-import React from 'react';
 import './Header.css';
+import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
-import { Link, useNavigate } from 'react-router-dom';
+import NavigationLink from '../NavigationLink/NavigationLink';
+import ProfileLink from '../ProfileLink/ProfileLink';
+import { navLinks } from '../../config/links';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
+import { useState } from 'react';
 
-function Header() {
-  const [loggedIn, setLoggedIn] = React.useState(true);
-  const navigate = useNavigate();
-  console.log(setLoggedIn);
+const Header = ({ isLoggedIn = true }) => {
+	const [burgerVisible, setBurgerVisible] = useState(false);
 
-  return (
-    <header className='header'>
-      <Link className='header__logo' to='/'></Link>
-      {loggedIn ? (
-        <Navigation />
-      ) : (
-        <div className='header__box'>
-          <button
-            type='button'
-            className='header__button'
-            onClick={() => navigate('/signup')}
-          >
-            Регистрация
-          </button>
-          <button
-            type='button'
-            className='header__button'
-            onClick={() => navigate('/signin')}
-          >
-            Войти
-          </button>
-        </div>
-      )}
-    </header>
-  );
-}
+	const burgerVisibilityHandler = () => {
+		setBurgerVisible(!burgerVisible);
+	};
+	return (
+		<>
+			<header className="header container">
+				<Logo />
+				{/* навигация авторизованного пользователя */}
+				<div className="header__loggedin-nav-wrapper">
+					{isLoggedIn ? <Navigation links={navLinks} /> : ''}
+				</div>
+				{/* навигация неавторизованного пользователя */}
+				{!isLoggedIn ? (
+					<nav className="header__auth-nav">
+						<ul className="header__nav-list">
+							<li className="header__nav-item">
+								<NavigationLink path={'/signup'} caption={'Регистрация'} />
+							</li>
+							<li className="header__nav-item">
+								<NavigationLink
+									path={'/signin'}
+									caption={'Войти'}
+									className={'navigation-link_login'}
+								/>
+							</li>
+						</ul>
+					</nav>
+				) : (
+					<ProfileLink className={'header__profile-link'} />
+				)}
+				{/* бургер-меню */}
+				<>
+					<button
+						className={`header__burger-menu-icon ${burgerVisible ? 'active' : ''}`}
+						onClick={burgerVisibilityHandler}>
+						<span className="header__burger-menu-line" />
+					</button>
+				</>
+			</header>
+
+			{isLoggedIn ? <BurgerMenu burgerVisible={burgerVisible} setBurgerVisible={setBurgerVisible} /> : <></>}
+		</>
+	);
+};
 
 export default Header;

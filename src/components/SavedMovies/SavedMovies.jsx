@@ -1,32 +1,18 @@
-import React from 'react';
-import './SavedMovies.css';
-import Header from '../Header/Header';
-import SearchForm from '../Movies/SearchForm/SearchForm';
-import MoviesCardList from './MoviesCardList/MoviesCardList';
-import { items } from '../../utils/movies.js';
-import Preloader from '../Preloader/Preloader';
-import Footer from '../Footer/Footer';
-import SavedDevider from './SavedDevider/SavedDevider';
+import React from "react";
+import "./SavedMovies.css";
+import SearchFilm from "../SearchFilm/SearchFilm";
+import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import { savedMovies } from "../../config/links";
 
-function SavedMovies() {
-  const [isLoading, setIsLoading] = React.useState(false);
-  console.log(setIsLoading);
-
+const SavedMovies = () => {
   return (
-    <main className='movies'>
-      {isLoading ? (
-        <Preloader />
-      ) : (
-        <>
-          <Header />
-          <SearchForm />
-          <MoviesCardList movies={items} />
-          <SavedDevider />
-          <Footer />
-        </>
-      )}
+    <main className="saved-movies">
+      <div className="saved-movies__container">
+        <SearchFilm />
+        <MoviesCardList links={savedMovies} />
+      </div>
     </main>
   );
-}
+};
 
 export default SavedMovies;

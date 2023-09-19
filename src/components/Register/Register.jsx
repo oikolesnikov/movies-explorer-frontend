@@ -1,79 +1,42 @@
-import React from 'react';
-import './Register.css';
-import FormContainer from '../FormContainer/FormContainer';
+import React from "react";
+import Logo from "../Logo/Logo";
+import AuthForm from "../AuthForm/AuthForm";
 
-function Register() {
-  const [isActiveError, setIsActiveError] = React.useState(true);
+import "./Register.css";
 
-  console.log(setIsActiveError);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-  }
-
+const Register = () => {
   return (
-    <main className='register'>
-      <FormContainer
-        title='Добро пожаловать!'
-        name='register'
-        onSubmit={handleSubmit}
-        buttonText='Зарегистрироваться'
-      >
-        <fieldset className='form__fieldset'>
-          <label className='form__label' htmlFor='name'>
+    <main className="register">
+      <div className="register__container">
+        <Logo className={"register__logo"} />
+        <h1 className="register__title">Добро пожаловать!</h1>
+
+        <AuthForm
+          authTextsParams={{
+            buttonCaption: "Зарегистрироваться",
+            question: "Уже зарегистрированы?",
+            linkCaption: "Войти",
+            path: "/signin",
+          }}
+        >
+          <label htmlFor="name" className="auth-form__label">
             Имя
+            <input
+              type="text"
+              id="name"
+              minLength="2"
+              maxLength="30"
+              className="auth-form__input"
+              required
+            />
+            <span className="auth-form__error-message">
+              Что-то пошло не так...
+            </span>
           </label>
-          <input
-            className='form__input focus'
-            name='name'
-            type='text'
-            minLength='2'
-            maxLength='40'
-            id='name'
-            required
-            placeholder='Денис'
-          />
-        </fieldset>
-        <fieldset className='form__fieldset'>
-          <label className='form__label' htmlFor='email'>
-            E-mail
-          </label>
-          <input
-            className='form__input focus'
-            name='email'
-            type='email'
-            minLength='2'
-            maxLength='40'
-            id='email'
-            required
-            placeholder='pochta@yandex.ru'
-          />
-        </fieldset>
-        <fieldset className='form__fieldset'>
-          <label className='form__label' htmlFor='password'>
-            Пароль
-          </label>
-          <input
-            className='form__input form__input_error'
-            name='password'
-            type='password'
-            minLength='6'
-            maxLength='100'
-            id='password'
-            required
-            placeholder='Пароль'
-          />
-          <span
-            id='name-error'
-            className={`form__error ${
-              isActiveError ? 'form__error_visible' : ''
-            } `}
-          >
-            Что-то пошло не так...
-          </span>
-        </fieldset>
-      </FormContainer>
+        </AuthForm>
+      </div>
     </main>
   );
-}
+};
+
 export default Register;

@@ -1,2 +1,21 @@
+@import url('./config/variables.css');
 @import url('./vendor/normalize.css');
 @import url('./vendor/fonts/fonts.css');
+
+#root {
+	font-family: var(--primary-ff-stack);
+	color: var(--light-text-color);
+	background-color: var(--primary-bg-color);
+}
+
+.container {
+	margin: 0 auto;
+	max-width: 1200px;
+	width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+:focus {
+	/*outline: 1px solid var(--secondary-accent-color);*/
+}

@@ -1,53 +1,27 @@
-import React from 'react';
-import './Login.css';
-import FormContainer from '../FormContainer/FormContainer';
+import React from "react";
+import Logo from "../Logo/Logo";
+import AuthForm from "../AuthForm/AuthForm";
 
-function Login() {
-  function handleSubmit(e) {
-    e.preventDefault();
-  }
+import "./Login.css";
 
+const Login = () => {
   return (
-    <main className='login'>
-      <FormContainer
-        title='Рады видеть!'
-        name='login'
-        onSubmit={handleSubmit}
-        buttonText='Войти'
-      >
-        <fieldset className='form__fieldset'>
-          <label className='form__label' htmlFor='email'>
-            E-mail
-          </label>
-          <input
-            className='form__input'
-            name='email'
-            type='email'
-            minLength='2'
-            maxLength='40'
-            id='email'
-            required
-            placeholder='pochta@yandex.ru'
-          />
-        </fieldset>
-        <fieldset className='form__fieldset'>
-          <label className='form__label' htmlFor='password'>
-            Пароль
-          </label>
-          <input
-            className='form__input'
-            name='password'
-            type='password'
-            minLength='6'
-            maxLength='100'
-            id='password'
-            required
-            placeholder='Пароль'
-          />
-        </fieldset>
-      </FormContainer>
+    <main className="login">
+      <div className="login__container">
+        <Logo className={"login__logo"} />
+        <h1 className="login__title">Рады видеть!</h1>
+
+        <AuthForm
+          authTextsParams={{
+            buttonCaption: "Войти",
+            question: "Ещё не зарегистрированы?",
+            linkCaption: "Регистрация",
+            path: "/signup",
+          }}
+        />
+      </div>
     </main>
   );
-}
+};
 
 export default Login;

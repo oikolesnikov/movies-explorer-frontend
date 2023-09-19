@@ -1,40 +1,52 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import './App.css';
+import { Switch, Route } from "react-router-dom";
+import "./App.css";
 
-import Main from '../Main/Main';
-import Movies from '../Movies/Movies';
-import SavedMovies from '../SavedMovies/SavedMovies';
-import Profile from '../Profile/Profile';
-import Login from '../Login/Login';
-import Register from '../Register/Register';
-import NotFound from '../NotFound/NotFound';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import Header from "../Header/Header";
+import Main from "../Main/Main";
+import Movies from "../Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies";
+import Footer from "../Footer/Footer";
+import { footerLinks } from "../../config/links";
+import Register from "../Register/Register";
+import Login from "../Login/Login";
+import Profile from "../Profile/Profile";
+import NotFound from "../NotFound/NotFound";
 
-function App() {
+const App = () => {
   return (
-    <div className='app'>
-      <Routes>
-        <Route
-          path='/'
-          element={
-            <>
-              <Header />
-              <Main />
-              <Footer />
-            </>
-          }
-        />
-        <Route path='/movies' element={<Movies />} />
-        <Route path='/saved-movies' element={<SavedMovies />} />
-        <Route path='/profile' element={<Profile />} />
-        <Route path='/signin' element={<Login />} />
-        <Route path='/signup' element={<Register />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+    <div className="app">
+      <Switch>
+        <Route exact path="/">
+          <Header />
+          <Main />
+          <Footer links={footerLinks} />
+        </Route>
+        <Route path="/movies">
+          <Header />
+          <Movies />
+          <Footer links={footerLinks} />
+        </Route>
+        <Route path="/saved-movies">
+          <Header />
+          <SavedMovies />
+          <Footer links={footerLinks} />
+        </Route>
+        <Route path="/signup">
+          <Register />
+        </Route>
+        <Route path="/signin">
+          <Login />
+        </Route>
+        <Route path="/profile">
+          <Header />
+          <Profile />
+        </Route>
+        <Route path="*">
+          <NotFound />
+        </Route>
+      </Switch>
     </div>
   );
-}
+};
 
 export default App;
