@@ -6,7 +6,7 @@ import { movies } from "../../config/links";
 
 const Movies = () => {
   return (
-    <main>
+    <main className="movies">
       <div className="movies__container">
         <SearchFilm className={"movies__search-film"} />
         <MoviesCardList links={movies} />

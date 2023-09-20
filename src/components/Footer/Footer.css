@@ -1,102 +1,91 @@
 .footer {
-  padding: 78px 70px 20px;
-  font-size: 13px;
-  line-height: 1.23;
+	font-size: 13px;
+	line-height: 1.23;
 }
 
 .footer__container {
-  margin: 0 auto;
-  max-width: var(--desktop-container);
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr min-content 1fr;
-  gap: 20px;
-  grid-template-areas:
-    "heading heading"
-    "line line"
-    "year nav-list"
-  ;
+	display: flex;
+	flex-direction: column;
 }
 
 .footer__heading {
-  margin: 0;
-  color: var(--lightgray-text-color);
-  text-align: center;
-  grid-area: heading;
+	margin: 0;
+	color: var(--lightgray-text-color);
+	text-align: center;
+	grid-area: heading;
+	padding-bottom: 21px;
+	position: relative;
 }
 
-.footer__line {
-  height: 1px;
-  grid-area: line;
+.footer__heading::before {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	right: 0px;
+	left: 0px;
+	height: 1px;
+	background: #424242;
+}
 
-  background-color: var(--dark-lines-color);
+.footer__main {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	margin: 20px 0;
+}
+
+@media (max-width: 500px) {
+	.footer__main {
+		flex-direction: column;
+		align-items: center;
+	}
 }
 
 .footer__year {
-  grid-area: year;
+	grid-area: year;
 }
 
 .footer__nav-list {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: end;
-  grid-area: nav-list;
-  list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+	grid-area: nav-list;
+	list-style: none;
 }
 
 .footer__link {
-  margin-left: 20px;
-  color: var(--light-text-color);
-  text-decoration: none;
-  transition: all .3s;
+	margin-left: 20px;
+	color: var(--light-text-color);
+	text-decoration: none;
+	transition: all 0.3s;
 }
 
 .footer__link:hover {
-  opacity: .6;
-  transition: all .3s;
-}
-
-@media screen and (max-width: 768px) {
-  .footer {
-    padding: 58px 50px 20px;
-  }
+	opacity: 0.6;
+	transition: all 0.3s;
 }
 
 @media screen and (max-width: 500px) {
-  .footer {
-    padding: 62px 10px 10px;
-  }
 
-  .footer__container {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(2, min-content) 1fr min-content;
-    grid-template-areas:
-      "heading"
-      "line"
-      "nav-list"
-      "year"
-    ;
-  }
+	.footer__heading {
+		font-size: 12px;
+	}
 
-  .footer__heading {
-    font-size: 12px;
-  }
+	.footer__nav-list {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
 
-  .footer__nav-list {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+	.footer__link {
+		margin: 0;
+		font-size: 12px;
+		line-height: 2.4;
+	}
 
-  .footer__link {
-    margin: 0;
-    font-size: 12px;
-    line-height: 2.4;
-  }
-
-  .footer__year {
-    text-align: center;
-  }
+	.footer__year {
+		text-align: center;
+	}
 }

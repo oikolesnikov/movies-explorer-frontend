@@ -5,7 +5,8 @@
 }
 
 .search-film_position {
-	margin: 70px 0;
+	margin-top: 70px;
+	margin-bottom: 70px;
 }
 
 .search-film__icon {
@@ -36,11 +37,12 @@
 }
 
 .search-film__button {
-	width: 44px;
+	width: 48px;
 	height: 44px;
 	background-color: var(--secondary-accent-color);
 	border: 0;
 	border-radius: 5px;
+	padding: 0;
 	cursor: pointer;
 	transition: all 0.3s;
 	position: relative;
@@ -66,7 +68,6 @@
 
 @media screen and (max-width: 768px) {
 	.search-film {
-		padding-right: 20px;
 		column-gap: 20px;
 	}
 

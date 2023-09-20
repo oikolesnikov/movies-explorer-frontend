@@ -13,7 +13,7 @@ const AboutMe = () => {
 			<div className="about-me__container">
 				<div className="bio">
 					<div className="bio__description">
-						<p className="bio__name">Олег</p>
+						<h3 className="bio__name">Олег</h3>
 						<p className="bio__job">Веб-разработчик, 22 года</p>
 						<p className="bio__text">Родился в Санкт-Петербурге. Учусь в универститете СПБГУТ.</p>
 

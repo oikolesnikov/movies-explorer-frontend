@@ -24,6 +24,7 @@ const Register = () => {
             <input
               type="text"
               id="name"
+              placeholder="Введите имя"
               minLength="2"
               maxLength="30"
               className="auth-form__input"

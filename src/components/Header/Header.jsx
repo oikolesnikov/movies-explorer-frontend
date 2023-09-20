@@ -43,6 +43,7 @@ const Header = ({ isLoggedIn = true }) => {
 				{/* бургер-меню */}
 				<>
 					<button
+					    type="button"
 						className={`header__burger-menu-icon ${burgerVisible ? 'active' : ''}`}
 						onClick={burgerVisibilityHandler}>
 						<span className="header__burger-menu-line" />
