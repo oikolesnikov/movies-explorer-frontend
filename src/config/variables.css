@@ -1,0 +1,40 @@
+:root {
+
+  --primary-bg-color: #202020;
+  --secondary-bg-color: #272727;
+  --tertiary-bg-color: #303030;
+  --quaternary-bg-color: #2F2F2F;
+  --profile-icon-bg-color: #313131;
+
+
+  --light-text-color: #fff;
+  --lightgray-text-color: #8B8B8B;
+  --dark-text-color: #000;
+  --input-error-color: #EE3465;
+  --primary-ff-stack: Inter, Arial, Helvetica, sans-serif;
+  --nav-link--text-size: 13px;
+  --regular-fw: 400;
+  --medium-fw: 500;
+
+
+  --primary-accent-color: #3DDC84;
+  --secondary-accent-color: #4285F4;
+
+
+  --light-lines-color: #DADADA;
+  --dark-lines-color: #424242;
+
+
+  --base-border-radius: 10px;
+  --auth-buttons-border-radius: 3px;
+  --wide-button-border-radius: 6px;
+  --search-field-border-radius: 9px;
+
+  
+  --desktop-container: 1200px;
+  --auth-form-container: 396px;
+  --tablet-max-width: 1199px;
+  --tablet-min-width: 768px;
+  --mobile-max-width: 767px;
+  --mobile-min-width: 320px;
+}
