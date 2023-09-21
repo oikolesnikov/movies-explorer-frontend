@@ -1,0 +1,133 @@
+.header {
+	display: flex;
+	min-height: 74px;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.header__loggedin-nav-wrapper {
+	display: grid;
+	grid-template-columns: min-content;
+	align-items: center;
+	column-gap: 44px;
+}
+
+.header__auth-nav {
+	display: flex;
+	align-items: center;
+	justify-self: end;
+}
+
+.header__nav-list {
+	display: grid;
+	margin: 0;
+	padding: 0;
+	grid-template-columns: repeat(2, min-content);
+	align-items: center;
+	justify-self: end;
+	column-gap: 30px;
+	list-style: none;
+}
+
+.header__profile-link {
+	justify-self: end;
+}
+
+@media screen and (max-width: 768px) {
+	.header {
+		grid-template-columns: repeat(2, min-content);
+		justify-content: space-between;
+	}
+
+	.header__loggedin-nav-wrapper {
+		display: none;
+	}
+
+	.header__nav-list {
+		column-gap: calc((100vw - 320px) / (768 - 320) * (33 - 23) + 23px);
+	}
+}
+
+
+.header__burger-menu-icon {
+	display: none;
+	right: calc((100vw - 320px) / (768 - 320) * (30 - 14) + 14px);
+	padding: 9px 8px 8px;
+	align-items: center;
+	width: 28px;
+	height: 23px;
+	transition-duration: 1s;
+	cursor: pointer;
+	transition: all 0.3s;
+	z-index: 100;
+	background: transparent;
+	outline: 0;
+	border: 0;
+	padding: 0;
+	
+}
+
+.header__burger-menu-icon:hover {
+	opacity: 0.6;
+}
+
+.header__burger-menu-icon.active {
+	position: fixed;
+}
+
+.header__burger-menu-line {
+	height: 3px;
+	width: 28px;
+	background-color: #fff;
+	position: absolute;
+	transition-duration: 0.25s;
+	transition-delay: 0.25s;
+}
+
+.header__burger-menu-line:before {
+	position: absolute;
+	left: 0;
+	top: -10px;
+	height: 3px;
+	width: 28px;
+	background-color: #fff;
+	content: '';
+	transition-duration: 0.25s;
+	transition: transform 0.25s, top 0.25s 0.25s;
+}
+
+.header__burger-menu-line:after {
+	position: absolute;
+	left: 0;
+	top: 10px;
+	height: 3px;
+	width: 28px;
+	background-color: #fff;
+	content: '';
+	transition-duration: 0.25s;
+	transition: transform 0.25s, top 0.25s 0.25s;
+}
+
+.header__burger-menu-icon.active .header__burger-menu-line {
+	transition-duration: 0.1s;
+	transition-delay: 0.25s;
+	background: transparent;
+}
+
+.header__burger-menu-icon.active .header__burger-menu-line:before {
+	top: 0;
+	transition: top 0.25s, transform 0.25s 0.25s;
+	transform: rotateZ(-45deg);
+}
+
+.header__burger-menu-icon.active .header__burger-menu-line:after {
+	top: 0;
+	transition: top 0.4s, transform 0.25s 0.25s;
+	transform: rotateZ(45deg);
+}
+
+@media screen and (max-width: 768px) {
+	.header__burger-menu-icon {
+		display: flex;
+	}
+}
