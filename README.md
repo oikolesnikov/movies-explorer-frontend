@@ -42,5 +42,10 @@
 - Сelebrate;
 - Winston.
 
-## Макеты Проектной работы в Figma:
+## Макет Проектной работы в Figma:
 - [Макет](https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/light-1?type=design&node-id=1-7266&mode=design);
+
+## Сайт
+- [PR](https://github.com/oikolesnikov/movies-explorer-frontend/pulls);
+- [Сайт](http://oikolesnikov.domain.study.nomoreparties.co/);
+

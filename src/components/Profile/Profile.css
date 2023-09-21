@@ -43,7 +43,7 @@
 }
 
 .profile__label:first-child {
-	
+
 	border-bottom: 1px solid #424242;
 }
 
@@ -82,7 +82,12 @@
 .profile__button_edit-confirm {
 	color: var(--light-text-color);
 }
-
+.profile__button_edit-confirm:disabled {
+	background-color: var(--dark-lines-color);
+}
+.profile__button_edit-confirm:disabled:hover {
+	opacity: 1;
+}
 .profile__button_logout {
 	color: var(--input-error-color);
 }

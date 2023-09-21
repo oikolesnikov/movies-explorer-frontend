@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Logo from "../Logo/Logo";
 import AuthForm from "../AuthForm/AuthForm";
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "./Register.css";
+import { AppContext } from '../../context/app.context';
 
 const Register = () => {
+
+  const context = useContext(AppContext);
+
+  useEffect(() => {
+    if (context.error) {
+      toast(context.error)
+      setTimeout(() => {
+        context.setError('')
+      }, 5000)
+    }
+  }, [context.error])
+
   return (
     <main className="register">
       <div className="register__container">
@@ -19,23 +34,9 @@ const Register = () => {
             path: "/signin",
           }}
         >
-          <label htmlFor="name" className="auth-form__label">
-            Имя
-            <input
-              type="text"
-              id="name"
-              placeholder="Введите имя"
-              minLength="2"
-              maxLength="30"
-              className="auth-form__input"
-              required
-            />
-            <span className="auth-form__error-message">
-              Что-то пошло не так...
-            </span>
-          </label>
         </AuthForm>
       </div>
+      <ToastContainer/>
     </main>
   );
 };

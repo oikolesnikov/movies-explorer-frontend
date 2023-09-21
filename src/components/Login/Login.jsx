@@ -1,10 +1,25 @@
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import Logo from "../Logo/Logo";
 import AuthForm from "../AuthForm/AuthForm";
+import {ToastContainer, toast} from 'react-toastify';
+import { AppContext } from '../../context/app.context';
+import 'react-toastify/dist/ReactToastify.css';
 
 import "./Login.css";
 
 const Login = () => {
+
+  const context = useContext(AppContext);
+
+  useEffect(() => {
+    if (context.error) {
+      toast(context.error)
+      setTimeout(() => {
+        context.setError('')
+      }, 5000)
+    }
+  }, [context.error, context])
+
   return (
     <main className="login">
       <div className="login__container">
@@ -20,6 +35,7 @@ const Login = () => {
           }}
         />
       </div>
+      <ToastContainer/>
     </main>
   );
 };
