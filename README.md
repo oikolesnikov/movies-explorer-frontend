@@ -45,7 +45,8 @@
 ## Макеты Проектной работы в Figma:
 - [Макет](https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/light-1?type=design&node-id=1-7266&mode=design);
 
-## Сайт:
+СайТ:
 https://github.com/oikolesnikov/movies-explorer-frontend/pull/2
+
 http://oikolesnikov.domain.study.nomoreparties.co/
 
