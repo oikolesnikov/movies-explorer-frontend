@@ -3,6 +3,7 @@ import Logo from "../Logo/Logo";
 import AuthForm from "../AuthForm/AuthForm";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useHistory} from 'react-router-dom';
 
 import "./Register.css";
 import { AppContext } from '../../context/app.context';
@@ -10,6 +11,11 @@ import { AppContext } from '../../context/app.context';
 const Register = () => {
 
   const context = useContext(AppContext);
+  const history = useHistory();
+
+  if (JSON.parse(localStorage.getItem('user'))?.token) {
+    history.push('/');
+  }
 
   useEffect(() => {
     if (context.error) {

@@ -4,12 +4,19 @@ import AuthForm from "../AuthForm/AuthForm";
 import {ToastContainer, toast} from 'react-toastify';
 import { AppContext } from '../../context/app.context';
 import 'react-toastify/dist/ReactToastify.css';
+import {useHistory} from 'react-router-dom';
 
 import "./Login.css";
 
 const Login = () => {
 
   const context = useContext(AppContext);
+  const history = useHistory();
+
+  if (JSON.parse(localStorage.getItem('user'))?.token) {
+    history.push('/');
+  }
+
 
   useEffect(() => {
     if (context.error) {

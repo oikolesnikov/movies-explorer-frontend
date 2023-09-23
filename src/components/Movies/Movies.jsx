@@ -4,10 +4,10 @@ import SearchFilm from "../SearchFilm/SearchFilm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import { AppContext } from '../../context/app.context';
 import Preloader from '../Preloader/Preloader'
-import { getMovies } from '../../utils/MoviesApi';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { CARDS_COUNTER } from '../../config/constants';
 
 const Movies = () => {
   const context = useContext(AppContext)
@@ -17,22 +17,46 @@ const Movies = () => {
     history.push('/')
   }
 
-  const [filtered, setFiltered] = useState([]);
   const [loadMore, setLoadMore] = useState([]);
   const [counter, setCounter] = useState(0);
 
   const loadHandler = () => {
-    setLoadMore(prev => [...prev, ...filtered.slice(12 + 3 * counter, (12 + 3 * counter) + 3)]);
-    setCounter(prev => +prev + 1)
+    let start = 12;
+    let step = 3;
+    if (window.innerWidth <= CARDS_COUNTER.hight.px && window.innerWidth >= CARDS_COUNTER.medium.px) {
+      start = CARDS_COUNTER.hight.cards;
+      step = CARDS_COUNTER.hight.step
+    }
+    if (window.innerWidth <= CARDS_COUNTER.medium.px && window.innerWidth >= CARDS_COUNTER.small.px) {
+      start = CARDS_COUNTER.medium.cards;
+      step = CARDS_COUNTER.medium.step
+    }
+    if (window.innerWidth <= CARDS_COUNTER.small.px) {
+      start = CARDS_COUNTER.small.cards;
+      step = CARDS_COUNTER.small.step
+    }
+    const data = [...context.filtered.slice(0, (start + step * (counter - 1)))]
+    console.log(context.filtered)
+    console.log(data)
+    console.log(start)
+    console.log(step)
+    console.log(counter)
+
+      setLoadMore([...context.filtered.slice(0, (start + step * (counter - 1)))]);
+      setCounter(prev => +prev + 1)
+
   }
 
+  useEffect(() => {
+    setCounter(0)
+  }, [context.searchString])
 
   useEffect(() => {
-    const localFiltered = localStorage.getItem('filtered');
-    if (localFiltered && typeof localFiltered !== 'undefined') {
-      setFiltered(JSON.parse(localFiltered));
+    if (context.filtered.length && context.searchString) {
+      loadHandler();
     }
-  }, [])
+  }, [context.filtered, context.searchString])
+
 
   useEffect(() => {
     if (context.error) {
@@ -43,58 +67,19 @@ const Movies = () => {
     }
   }, [context.error])
 
-
-  useEffect(() => {
-    (async () => {
-      const films = JSON.parse(localStorage.getItem('films'));
-      if (films) {
-        context.setMovies(films);
-      } else {
-        await getMovies(context)
-      }
-    })();
-  }, [])
-
-  useEffect(() => {
-    (async () => {
-      if (context.searchString && context.movies.length) {
-        setFiltered(prev => {
-          const movies = [...context.movies.filter(movie => {
-            if (movie.nameRU.toLowerCase().indexOf(context.searchString.toLowerCase()) > 0
-              || movie.nameEN.toLowerCase().indexOf(context.searchString.toLowerCase()) > 0) {
-              if (context.shorts) {
-                if (movie.duration <= 40) {
-                  return movie
-                }
-              } else {
-                return movie
-              }
-            }
-          })]
-          return [...movies]
-        })
-        setCounter(0);
-      }
-    })()
-  }, [context.searchString, context.shorts]);
-
-  useEffect(() => {
-    localStorage.setItem('filtered', JSON.stringify(filtered));
-    setLoadMore(filtered.slice(0, 12))
-  }, [filtered])
-
   return (
     <main className="movies">
       <>
         <div className="movies__container">
           <SearchFilm className={"movies__search-film"} />
-          {context.searchString
-            ? !context.loading ? filtered.length ? <MoviesCardList links={loadMore} /> : <div className='alert'>"Ничего не найдено"</div> : <Preloader /> : <></>}
+          {context.loading && <Preloader />}
+          {context.searchString && !loadMore.length && !context.filtered.length && !context.loading ? <div className='alert'>"Ничего не найдено"</div> : ''}
+          {context.searchString && loadMore.length ? <MoviesCardList links={loadMore} /> : ''}
         </div>
-        {(context.searchString
-          && filtered.length) && loadMore.length < filtered.length ? <button type="button" className="movies__load-more" onClick={loadHandler}>
-          <span className="movies__more-caption">Ещё</span>
-        </button> : ''}
+        {loadMore.length < context.filtered.length
+          && <button type="button" className="movies__load-more" onClick={loadHandler}>
+            <span className="movies__more-caption">Ещё</span>
+          </button>}
 
       </>
       <ToastContainer />

@@ -13,7 +13,7 @@ const MoviesCardList = ({
           return <MoviesCard
             {...item}
             image={item.image}
-            key={index}
+            key={item.id || item.movieId}
           />
 
         })}

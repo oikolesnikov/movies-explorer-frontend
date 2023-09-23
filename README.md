@@ -46,6 +46,6 @@
 - [Макет](https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/light-1?type=design&node-id=1-7266&mode=design);
 
 ## Сайт:
-- [PR](https://github.com/oikolesnikov/movies-explorer-frontend/pulls);
+- [PR](https://github.com/oikolesnikov/movies-explorer-frontend/pull/2);
 - [Сайт](http://oikolesnikov.domain.study.nomoreparties.co/);
 

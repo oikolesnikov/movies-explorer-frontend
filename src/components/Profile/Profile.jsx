@@ -39,8 +39,22 @@ const Profile = () => {
 	const editProfileHandler = async (e) => {
 		e.preventDefault();
 
+		if (name === context.currentUser.name && email === context.currentUser.email) {
+			return toast('Имя и емайл должны отличаться от действуюших');
+		}
+
+		if (!email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+			return toast('Введён некорректный емайл');
+		}
+
 		try {
-			return await editProfile({...context.currentUser, name, email}, context);
+			await editProfile({...context.currentUser, name, email}, context).then(res => {
+				if (res === 401) {
+					context.setCurrentUser({});
+					localStorage.clear();
+					history.push('/')
+				}
+			})
 		} catch (e) {
 			console.error(e);
 			throw new Error(e);
@@ -55,7 +69,7 @@ const Profile = () => {
 					<div className="profile__edit-form-container">
 						<label htmlFor="profile-name" className="profile__label">
 							Имя
-							<input placeholder="Имя" type="text" id="profile-name" className="profile__input" value={name} onChange={e => setName(e.target.value)}/>
+							<input placeholder="Имя" type="text" id="profile-name" className="profile__input" value={name} onChange={e => setName(e.target.value)} disabled={context.loading}/>
 						</label>
 						<label htmlFor="profile-email" className="profile__label">
 							E-mail
@@ -66,12 +80,13 @@ const Profile = () => {
 								className="profile__input"
 								value={email}
 								onChange={e => setEmail(e.target.value)}
+								disabled={context.loading}
 							/>
 						</label>
 					</div>
 
 					<div className="profile__control">
-						<button onClick={(e) => editProfileHandler(e)} className="profile__button profile__button_edit-confirm" disabled={name === context.currentUser.name && email === context.currentUser.email}>
+						<button onClick={(e) => editProfileHandler(e)} className="profile__button profile__button_edit-confirm" disabled={(name === context.currentUser.name && email === context.currentUser.email) || context.loading}>
 							Редактировать
 
 						</button>

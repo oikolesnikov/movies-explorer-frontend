@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "./ProfileLink.css";
-import profileIcon from "../../images/profile-icon.svg";
 
 const ProfileLink = ({ className = "" }) => {
   return (
