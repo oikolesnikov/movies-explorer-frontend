@@ -47,7 +47,7 @@
 
 Сайт и PR:
 
-https://github.com/oikolesnikov/movies-explorer-frontend/pull/2
+- [PR](https://github.com/oikolesnikov/movies-explorer-frontend/pull/2);
 
 http://oikolesnikov.domain.study.nomoreparties.co/
 
