@@ -10,7 +10,9 @@ const AuthForm = ({ children, authTextsParams }) => {
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
-	const [error, setError] = useState(false)
+	const [emailError, setEmailError] = useState(false)
+	const [nameError, setNameError] = useState(false)
+	const [passwordError, setPasswordError] = useState(false)
 
 	const context = useContext(AppContext);
 	const history = useHistory();
@@ -39,8 +41,6 @@ const AuthForm = ({ children, authTextsParams }) => {
 
 			if (errors.length) {
 				return;
-			} else {
-				setError(false)
 			}
 
 			registration({ email, password, name }, context).then(user => {
@@ -63,27 +63,28 @@ const AuthForm = ({ children, authTextsParams }) => {
 
 	const emailBlurHandler = (e) => {
 		if (!e.target.value.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-			setError(true)
+			setEmailError(true)
 			toast('Введён некорректный емайл');
 		} else {
-			setError(false)
+			setEmailError(false)
 		}
 	}
 
 	const passwordBlurHandler = (e) => {
 		if (e.target.value.length < 2 || password.length > 30) {
-			setError(true)
+			setPassword(true)
 			toast("Пароль должен быть не менее 2 и не более 30 символов")
 		} else {
-			setError(false)
+			setPasswordError(false)
 		}
 	}
 
 	const nameBlurHandler = (e) => {
-		if (name.length < 2 || name.length > 30) {
+		if (e.target.value.length < 2 || name.length > 30) {
+			setNameError(true)
 			toast("Имя должно быть не менее 2 и не более 30 символов")
 		} else {
-			setError(false)
+			setNameError(false)
 		}
 
 	}
@@ -191,10 +192,10 @@ const AuthForm = ({ children, authTextsParams }) => {
 
 			<div className="auth-form__control-wrapper">
 				{history.location.pathname === '/signup'
-					? <button onClick={(e) => registrationHandler(e)} className="auth-form__submit-button" disabled={!email || !name || !password || context.loading || error}>
+					? <button onClick={(e) => registrationHandler(e)} className="auth-form__submit-button" disabled={!email || !name || !password || context.loading || nameError || passwordError || emailError}>
 						<span className="auth-form__button-caption">{authTextsParams.buttonCaption}</span>
 					</button>
-					: <button onClick={(e) => loginHandler(e)} className="auth-form__submit-button" disabled={!email || !password || context.loading || error}>
+					: <button onClick={(e) => loginHandler(e)} className="auth-form__submit-button" disabled={!email || !password || context.loading || passwordError || emailError}>
 						<span className="auth-form__button-caption">{authTextsParams.buttonCaption}</span>
 					</button>}
 

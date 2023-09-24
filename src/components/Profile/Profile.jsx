@@ -16,21 +16,23 @@ const Profile = () => {
 		history.push('/')
 	}
 
-	const [error, setError] = useState(false);
+	const [emailError, setEmailError] = useState(false)
+	const [nameError, setNameError] = useState(false)
 
 	const emailBlurHandler = (e) => {
-		if (!e.target.value.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-			setError(true)
+		if (!e.target.value.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) || e.target.value === context.currentUser.email) {
+			setEmailError(true)
 			toast('Введён некорректный емайл');
 		} else {
-			setError(false)
+			setEmailError(false)
 		}
 	}
 	const nameBlurHandler = (e) => {
-		if (name.length < 2 || name.length > 30) {
+		if (e.target.value.length < 2 || e.target.value.length > 30 || e.target.value === context.currentUser.name) {
+			setNameError(true)
 			toast("Имя должно быть не менее 2 и не более 30 символов")
 		} else {
-			setError(false)
+			setNameError(false)
 		}
 
 	}
@@ -119,7 +121,7 @@ const Profile = () => {
 					</div>
 
 					<div className="profile__control">
-						<button onClick={(e) => editProfileHandler(e)} className="profile__button profile__button_edit-confirm" disabled={(name === context.currentUser.name && email === context.currentUser.email) || context.loading || error}>
+						<button onClick={(e) => editProfileHandler(e)} className="profile__button profile__button_edit-confirm" disabled={(name === context.currentUser.name && email === context.currentUser.email) || context.loading || nameError || emailError}>
 							Редактировать
 
 						</button>
