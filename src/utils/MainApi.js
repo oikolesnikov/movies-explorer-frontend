@@ -21,19 +21,6 @@ export const login = async ({ email, password }, context) => {
         return await res.json();
       }
     })
-    .then(user => {
-      context.setCurrentUser(user);
-      context.setLoading(false);
-
-      localStorage.setItem('user', JSON.stringify(user));
-
-      return user;
-    }).catch(e => {
-      context.setLoading(false);
-      context.setError(e.message);
-      console.error(e);
-      throw new Error(e);
-    })
 };
 
 export const registration = async ({ email, password, name }, context) => {
@@ -57,50 +44,6 @@ export const registration = async ({ email, password, name }, context) => {
         return await res.json();
       }
     })
-    .then(user => {
-      context.setCurrentUser(user);
-      context.setLoading(false);
-
-      localStorage.setItem('user', JSON.stringify(user));
-
-      return user;
-    })
-    .catch(e => {
-      context.setLoading(false);
-      context.setError(e.message);
-      console.error(e);
-      throw new Error(e);
-    })
-}
-
-export const getMe = async ({ _id }, context) => {
-  context.setLoading(true);
-
-  return await fetch(`http://api.oikolesnikov.domain.nomoreparties.co:81/me/${_id}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    },
-  })
-    .then(async res => {
-      if (res.statusText !== 'OK' && res.status !== 401) {
-        throw await res.json()
-      } else {
-        return await res.json();
-      }
-    })
-    .then(user => {
-      context.setCurrentUser(user);
-      context.setLoading(false);
-
-      return user
-    })
-    .catch(e => {
-      context.setLoading(false);
-      context.setError(e.message);
-      console.error(e);
-      throw new Error(e);
-    })
 }
 
 export const editProfile = async ({ email, name, token }, context) => {
@@ -122,25 +65,6 @@ export const editProfile = async ({ email, name, token }, context) => {
       } else {
         return await res.json();
       }
-    })
-    .then(res => res).then(user => {
-
-      const oldStorage = JSON.parse(localStorage.getItem('user'))
-
-      localStorage.setItem('user', JSON.stringify({ ...oldStorage, name: user.name, email: user.email }));
-
-      context.setCurrentUser({ ...user, token: oldStorage.token });
-      context.setLoading(false);
-
-      toast('Данные успешно обновлены')
-
-      return user;
-    })
-    .catch(e => {
-      context.setLoading(false);
-      context.setError("Не удалось изменить профиль");
-      console.error(e);
-      return e
     })
 }
 

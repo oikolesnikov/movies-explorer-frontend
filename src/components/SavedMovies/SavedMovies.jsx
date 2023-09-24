@@ -17,17 +17,25 @@ const SavedMovies = () => {
   }
 
   useEffect(() => {
-    (async () => {
-      await getLiked(context).then(res => {
-        if (res === 401) {
-          localStorage.clear();
-          context.setCurrentUser({});
-          return history.push('/')
-        } else {
-          context.setLikedMovies([...res])
-        }
-      })
-    })()
+      getLiked(context)
+      .then(res => {
+      context.setLoading(false);
+
+      if (res === 401) {
+        localStorage.clear();
+        context.setCurrentUser({});
+        return history.push('/')
+      } else {
+        context.setLikedMovies([...res])
+      }
+
+      return res;
+    }).catch(e => {
+      console.error(e);
+      context.setLoading(false);
+      context.setError(e.message);
+      return e;
+    })
   }, [])
 
   return (

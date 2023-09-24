@@ -12,9 +12,7 @@
 .movies-card:hover .movies-card__icon_delete {
 	display: flex;
 }
-.movies-card:hover .movies-card__icon_saved {
-	display: none;
-}
+
 
 .movies-card_link {
 	text-decoration: none;

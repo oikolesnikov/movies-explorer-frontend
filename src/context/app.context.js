@@ -68,15 +68,25 @@ export const CurrentUserContext = ({ loading = false, error = '', currentUserDat
 
   useEffect(() => {
     if (currentUser.token && !likedMovies.length) {
-      getLiked({ currentUser, setLoading, setError }).then(res => {
+      getLiked({ currentUser, setLoading, setError })
+      .then(res => {
+        setLoading(false);
+
         if (res === 401) {
-          setCurrentUser({});
           localStorage.clear();
+          setCurrentUser({});
           return history.push('/')
         } else {
           setLikedMovies([...res])
         }
-      });
+
+        return res;
+      }).catch(e => {
+        console.error(e);
+        setLoading(false);
+        setError(e.message);
+        return e;
+      })
     }
   }, [])
 

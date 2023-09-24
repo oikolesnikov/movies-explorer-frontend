@@ -16,26 +16,44 @@ const MoviesCard = (movie) => {
 		e.preventDefault()
 		if (!like) {
 			setLike(prev => !prev)
-			await addLike(movie, context).then(res => {
-				if (res === 401) {
-					context.setCurrentUser({});
-					localStorage.clear();
-					return history.push('/')
-				} else {
-					context.setLikedMovies([...context.likedMovies, res]);
-				}
-			});
+			addLike(movie, context)
+				.then(res => {
+					context.setLoading(false);
+
+					if (res === 401) {
+						context.setCurrentUser({});
+						localStorage.clear();
+						return history.push('/')
+					} else {
+						context.setLikedMovies([...context.likedMovies, res]);
+					}
+				}).catch(e => {
+					console.error(e);
+					context.setLoading(false);
+					context.setError(e.message);
+					return e;
+				});
 		} else {
 			setLike(prev => !prev)
-			deleteLiked(movie.movieId ? movie.movieId : movie.id, context).then(res => {
-				if (res === 401) {
-					context.setCurrentUser({});
-					localStorage.clear();
-					return history.push('/')
-				} else {
-					context.setLikedMovies([...context.likedMovies.filter(movie => movie.nameRU !== res.nameRU)]);
-				}
-			});
+			deleteLiked(movie.movieId ? movie.movieId : movie.id, context)
+				.then(res => {
+					context.setLoading(false);
+
+					if (res === 401) {
+						context.setCurrentUser({});
+						localStorage.clear();
+						return history.push('/')
+					} else {
+						context.setLikedMovies([...context.likedMovies.filter(movie => movie.nameRU !== res.nameRU)]);
+					}
+
+					return res;
+				}).catch(e => {
+					console.error(e);
+					context.setLoading(false);
+					context.setError(e.message);
+					return e;
+				});
 		}
 	}
 
@@ -65,11 +83,20 @@ const MoviesCard = (movie) => {
 					<h2 className="movies-card__title">{movie.nameRU}</h2>
 					<span className="movies-card__duration">{Math.floor(movie.duration / 60)}ч {Math.floor(movie.duration - Math.floor(movie.duration / 60) * 60)}м</span>
 				</div>
-				{!like
+				{pathname === '/movies' ?
+				!like
 					? <span className="movies-card__icon_save" onClick={(e) => likeHandler(e)}>
 						Сохранить
 					</span>
 					:
+					<span className="movies-card__icon_saved" onClick={(e) => likeHandler(e)}>
+						<img
+							width={12}
+							height={12}
+							src={savedCardIcon}
+							alt={'Сохранено'}
+						/></span> : ''}
+				{like && pathname === '/saved-movies' ?
 					<span className="movies-card__icon_delete" onClick={(e) => likeHandler(e)}>
 						<img
 							width={12}
@@ -77,15 +104,7 @@ const MoviesCard = (movie) => {
 							src={deleteCardIcon}
 							alt={'Удалить фильм'}
 						/>
-					</span>}
-				{like && <span className="movies-card__icon_saved" onClick={(e) => likeHandler(e)}>
-					<img
-						width={12}
-						height={12}
-						src={savedCardIcon}
-						alt={'Сохранено'}
-					/>
-				</span>}
+					</span> : ''}
 			</a>
 		</li>
 	);

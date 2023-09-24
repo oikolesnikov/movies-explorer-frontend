@@ -10,77 +10,120 @@ const AuthForm = ({ children, authTextsParams }) => {
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
+	const [error, setError] = useState(false)
 
 	const context = useContext(AppContext);
 	const history = useHistory();
 
 	const registrationHandler = async (e) => {
 		e.preventDefault();
-		try {
-			if (email && password && name) {
+		if (email && password && name) {
 
-				const errors = [];
+			const errors = [];
 
-				if (!email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-					toast('Введён некорректный емайл');
-					errors.push('Введён некорректный емайл')
-				}
+			if (!email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+				toast('Введён некорректный емайл');
+				errors.push('Введён некорректный емайл')
+			}
 
-				if (password.length < 2 || password.length > 30) {
-					toast("Пароль должен быть не менее 2 и не более 30 символов")
-					errors.push('Пароль должен быть не менее 2 и не более 30 символов')
-				}
+			if (password.length < 2 || password.length > 30) {
+				toast("Пароль должен быть не менее 2 и не более 30 символов")
+				errors.push('Пароль должен быть не менее 2 и не более 30 символов')
+			}
 
-				if (name.length < 2 || name.length > 30) {
-					toast("Имя должно быть не менее 2 и не более 30 символов")
-					errors.push('Имя должно быть не менее 2 и не более 30 символов')
-				}
-
-				if (errors.length) {
-					return;
-				}
+			if (name.length < 2 || name.length > 30) {
+				toast("Имя должно быть не менее 2 и не более 30 символов")
+				errors.push('Имя должно быть не менее 2 и не более 30 символов')
+			}
 
 
-				const user = await registration({ email, password, name }, context);
+			if (errors.length) {
+				return;
+			} else {
+				setError(false)
+			}
+
+			registration({ email, password, name }, context).then(user => {
+				context.setCurrentUser(user);
+				context.setLoading(false);
+
+				localStorage.setItem('user', JSON.stringify(user));
 
 				if (user) {
 					history.push('/movies')
 				}
-			}
-		} catch (e) {
-			console.error(e);
+			})
+				.catch(e => {
+					context.setLoading(false);
+					context.setError(e.message);
+					console.error(e);
+				})
 		}
+	}
+
+	const emailBlurHandler = (e) => {
+		if (!e.target.value.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+			setError(true)
+			toast('Введён некорректный емайл');
+		} else {
+			setError(false)
+		}
+	}
+
+	const passwordBlurHandler = (e) => {
+		if (e.target.value.length < 2 || password.length > 30) {
+			setError(true)
+			toast("Пароль должен быть не менее 2 и не более 30 символов")
+		} else {
+			setError(false)
+		}
+	}
+
+	const nameBlurHandler = (e) => {
+		if (name.length < 2 || name.length > 30) {
+			toast("Имя должно быть не менее 2 и не более 30 символов")
+		} else {
+			setError(false)
+		}
+
 	}
 
 	const loginHandler = async (e) => {
 		e.preventDefault();
 
-		try {
-			if (email && password) {
+		if (email && password) {
+			const errors = [];
 
-				const errors = [];
-
-				if (!email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-					toast('Введён некорректный емайл');
-					errors.push('Введён некорректный емайл')
-				}
-
-				if (password.length < 2 || password.length > 30) {
-					toast("Пароль должен быть не менее 2 и не более 30 символов")
-					errors.push('Пароль должен быть не менее 2 и не более 30 символов')
-				}
-
-				if (errors.length) {
-					return;
-				}
-
-				const token = await login({ email, password }, context);
-				if (token) {
-					history.push('/movies')
-				}
+			if (!email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+				toast('Введён некорректный емайл');
+				errors.push('Введён некорректный емайл')
 			}
-		} catch (e) {
-			console.error(e);
+
+			if (password.length < 2 || password.length > 30) {
+				toast("Пароль должен быть не менее 2 и не более 30 символов")
+				errors.push('Пароль должен быть не менее 2 и не более 30 символов')
+			}
+
+			if (errors.length) {
+				return;
+			}
+
+			login({ email, password }, context)
+				.then(user => {
+					context.setCurrentUser(user);
+					context.setLoading(false);
+
+					localStorage.setItem('user', JSON.stringify(user));
+
+					if (user) {
+						history.push('/movies')
+					}
+					return user;
+				}).catch(e => {
+					context.setLoading(false);
+					context.setError(e.message);
+					console.error(e);
+				})
 		}
 	}
 
@@ -101,6 +144,8 @@ const AuthForm = ({ children, authTextsParams }) => {
 						className="auth-form__input"
 						required
 						disabled={context.loading}
+						onBlur={e => emailBlurHandler(e)}
+
 					/>
 					<span className="auth-form__error-message">Что-то пошло не так...</span>
 				</label>
@@ -117,6 +162,7 @@ const AuthForm = ({ children, authTextsParams }) => {
 						className="auth-form__input"
 						disabled={context.loading}
 						required
+						onBlur={passwordBlurHandler}
 					/>
 					<span className="auth-form__error-message">Что-то пошло не так...</span>
 				</label>
@@ -134,7 +180,7 @@ const AuthForm = ({ children, authTextsParams }) => {
 							className="auth-form__input"
 							disabled={context.loading}
 							required
-
+							onBlur={nameBlurHandler}
 						/>
 						<span className="auth-form__error-message">
 							Что-то пошло не так...
@@ -145,10 +191,10 @@ const AuthForm = ({ children, authTextsParams }) => {
 
 			<div className="auth-form__control-wrapper">
 				{history.location.pathname === '/signup'
-					? <button onClick={(e) => registrationHandler(e)} className="auth-form__submit-button" disabled={!email || !name || !password || context.loading}>
+					? <button onClick={(e) => registrationHandler(e)} className="auth-form__submit-button" disabled={!email || !name || !password || context.loading || error}>
 						<span className="auth-form__button-caption">{authTextsParams.buttonCaption}</span>
 					</button>
-					: <button onClick={(e) => loginHandler(e)} className="auth-form__submit-button" disabled={!email || !password || context.loading}>
+					: <button onClick={(e) => loginHandler(e)} className="auth-form__submit-button" disabled={!email || !password || context.loading || error}>
 						<span className="auth-form__button-caption">{authTextsParams.buttonCaption}</span>
 					</button>}
 

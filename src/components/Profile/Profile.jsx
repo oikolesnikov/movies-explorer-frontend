@@ -4,17 +4,36 @@ import './Profile.css';
 import { Link, useHistory } from 'react-router-dom';
 import { editProfile } from '../../utils/MainApi';
 import { AppContext } from '../../context/app.context';
-import {ToastContainer, toast} from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Profile = () => {
 	const context = useContext(AppContext);
 
-  const history = useHistory();
+	const history = useHistory();
 
-  if (!context.currentUser.token) {
-    history.push('/')
-  }
+	if (!context.currentUser.token) {
+		history.push('/')
+	}
+
+	const [error, setError] = useState(false);
+
+	const emailBlurHandler = (e) => {
+		if (!e.target.value.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+			setError(true)
+			toast('Введён некорректный емайл');
+		} else {
+			setError(false)
+		}
+	}
+	const nameBlurHandler = (e) => {
+		if (name.length < 2 || name.length > 30) {
+			toast("Имя должно быть не менее 2 и не более 30 символов")
+		} else {
+			setError(false)
+		}
+
+	}
 
 	const [name, setName] = useState(context.currentUser.name);
 	const [email, setEmail] = useState(context.currentUser.email);
@@ -28,37 +47,50 @@ const Profile = () => {
 	}
 
 	useEffect(() => {
-    if (context.error) {
-      toast(context.error)
-      setTimeout(() => {
-        context.setError('')
-      }, 5000)
-    }
-  }, [context.error])
+		if (context.error) {
+			toast(context.error)
+			setTimeout(() => {
+				context.setError('')
+			}, 5000)
+		}
+	}, [context.error])
 
 	const editProfileHandler = async (e) => {
 		e.preventDefault();
 
-		if (name === context.currentUser.name && email === context.currentUser.email) {
+		if (name && name === context.currentUser.name && email === context.currentUser.email) {
 			return toast('Имя и емайл должны отличаться от действуюших');
 		}
 
 		if (!email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
 			return toast('Введён некорректный емайл');
 		}
+		await editProfile({ ...context.currentUser, name, email }, context)
+			.then(user => {
 
-		try {
-			await editProfile({...context.currentUser, name, email}, context).then(res => {
-				if (res === 401) {
+				if (user === 401) {
 					context.setCurrentUser({});
 					localStorage.clear();
-					history.push('/')
+					return history.push('/')
 				}
+
+				const oldStorage = JSON.parse(localStorage.getItem('user'))
+
+				localStorage.setItem('user', JSON.stringify({ ...oldStorage, name: user.name, email: user.email }));
+
+				context.setCurrentUser({ ...user, token: oldStorage.token });
+				context.setLoading(false);
+
+				toast('Данные успешно обновлены')
+
+				return user;
 			})
-		} catch (e) {
-			console.error(e);
-			throw new Error(e);
-		}
+			.catch(e => {
+				context.setLoading(false);
+				context.setError("Не удалось изменить профиль");
+				console.error(e);
+				return e
+			})
 	}
 
 	return (
@@ -69,7 +101,7 @@ const Profile = () => {
 					<div className="profile__edit-form-container">
 						<label htmlFor="profile-name" className="profile__label">
 							Имя
-							<input placeholder="Имя" type="text" id="profile-name" className="profile__input" value={name} onChange={e => setName(e.target.value)} disabled={context.loading}/>
+							<input placeholder="Имя" type="text" id="profile-name" className="profile__input" value={name} onChange={e => setName(e.target.value)} disabled={context.loading} onBlur={nameBlurHandler}/>
 						</label>
 						<label htmlFor="profile-email" className="profile__label">
 							E-mail
@@ -81,12 +113,13 @@ const Profile = () => {
 								value={email}
 								onChange={e => setEmail(e.target.value)}
 								disabled={context.loading}
+								onBlur={emailBlurHandler}
 							/>
 						</label>
 					</div>
 
 					<div className="profile__control">
-						<button onClick={(e) => editProfileHandler(e)} className="profile__button profile__button_edit-confirm" disabled={(name === context.currentUser.name && email === context.currentUser.email) || context.loading}>
+						<button onClick={(e) => editProfileHandler(e)} className="profile__button profile__button_edit-confirm" disabled={(name === context.currentUser.name && email === context.currentUser.email) || context.loading || error}>
 							Редактировать
 
 						</button>
@@ -96,7 +129,7 @@ const Profile = () => {
 					</div>
 				</form>
 			</div>
-			<ToastContainer/>
+			<ToastContainer />
 		</section>
 	);
 };

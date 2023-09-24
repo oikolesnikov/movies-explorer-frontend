@@ -10,19 +10,5 @@ export const getMovies = async (context) => {
       } else {
         return await res
       }
-    })
-    .then(res => {
-
-      context.setMovies(res);
-      context.setLoading(false);
-      localStorage.setItem('films', JSON.stringify(res))
-      context.setLoading(false);
-
-      return res;
-    })
-    .catch(e => {
-      context.setLoading(false);
-      context.setError('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
-      console.error(e);
-    })
+    });
 }

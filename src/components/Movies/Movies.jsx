@@ -20,6 +20,37 @@ const Movies = () => {
   const [loadMore, setLoadMore] = useState([]);
   const [counter, setCounter] = useState(0);
 
+  const loadStart = () => {
+    let start = 12;
+    let step = 3;
+    if (window.innerWidth <= CARDS_COUNTER.hight.px && window.innerWidth >= CARDS_COUNTER.medium.px) {
+      start = CARDS_COUNTER.hight.cards;
+      step = CARDS_COUNTER.hight.step
+    }
+    if (window.innerWidth <= CARDS_COUNTER.medium.px && window.innerWidth >= CARDS_COUNTER.small.px) {
+      start = CARDS_COUNTER.medium.cards;
+      step = CARDS_COUNTER.medium.step
+    }
+    if (window.innerWidth <= CARDS_COUNTER.small.px) {
+      start = CARDS_COUNTER.small.cards;
+      step = CARDS_COUNTER.small.step
+    }
+
+    let data
+    console.log(loadMore.length)
+
+    data = [...context.filtered.slice(0, start)]
+
+    console.log(context.filtered)
+    console.log(data)
+    console.log(start)
+    console.log(step)
+    console.log(counter)
+
+    setLoadMore([...data]);
+    // setCounter(prev => +prev + 1)
+  }
+
   const loadHandler = () => {
     let start = 12;
     let step = 3;
@@ -35,25 +66,31 @@ const Movies = () => {
       start = CARDS_COUNTER.small.cards;
       step = CARDS_COUNTER.small.step
     }
-    const data = [...context.filtered.slice(0, (start + step * (counter - 1)))]
+
+    let data
+    console.log(loadMore.length)
+    if (loadMore.length) {
+      data = [...context.filtered.slice(0, (loadMore.length + step))];
+    } else {
+      data = [...context.filtered.slice(0, start)]
+    }
     console.log(context.filtered)
     console.log(data)
     console.log(start)
     console.log(step)
     console.log(counter)
 
-      setLoadMore([...context.filtered.slice(0, (start + step * (counter - 1)))]);
-      setCounter(prev => +prev + 1)
-
+    setLoadMore([...data]);
+    // setCounter(prev => +prev + 1)
   }
 
-  useEffect(() => {
-    setCounter(0)
-  }, [context.searchString])
+  // useEffect(() => {
+  //   setCounter(0)
+  // }, [context.searchString, history.location.pathname])
 
   useEffect(() => {
     if (context.filtered.length && context.searchString) {
-      loadHandler();
+      loadStart();
     }
   }, [context.filtered, context.searchString])
 
