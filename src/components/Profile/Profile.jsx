@@ -20,9 +20,8 @@ const Profile = () => {
 	const [nameError, setNameError] = useState(false)
 
 	const emailBlurHandler = (e) => {
-		if (!e.target.value.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) || e.target.value === context.currentUser.email) {
+		if (!e.target.value.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
 			setEmailError(true)
-			toast('Введён некорректный емайл');
 		} else {
 			setEmailError(false)
 		}
@@ -30,7 +29,6 @@ const Profile = () => {
 	const nameBlurHandler = (e) => {
 		if (e.target.value.length < 2 || e.target.value.length > 30 || e.target.value === context.currentUser.name) {
 			setNameError(true)
-			toast("Имя должно быть не менее 2 и не более 30 символов")
 		} else {
 			setNameError(false)
 		}
@@ -61,13 +59,18 @@ const Profile = () => {
 		e.preventDefault();
 
 		if (name && name === context.currentUser.name && email === context.currentUser.email) {
-			return toast('Имя и емайл должны отличаться от действуюших');
+			setNameError(true)
+			setEmailError(true)
 		}
 
 		if (!email.toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-			return toast('Введён некорректный емайл');
+			setEmailError(true);
 		}
-		await editProfile({ ...context.currentUser, name, email }, context)
+
+		if (emailError || nameError) {
+			return;
+		}
+		editProfile({ ...context.currentUser, name, email }, context)
 			.then(user => {
 
 				if (user === 401) {
@@ -103,21 +106,24 @@ const Profile = () => {
 					<div className="profile__edit-form-container">
 						<label htmlFor="profile-name" className="profile__label">
 							Имя
-							<input placeholder="Имя" type="text" id="profile-name" className="profile__input" value={name} onChange={e => setName(e.target.value)} disabled={context.loading} onBlur={nameBlurHandler}/>
+							<input placeholder="Имя" type="text" id="profile-name" onFocus={e => setNameError(false)} value={name} onChange={e => setName(e.target.value)} disabled={context.loading} onBlur={nameBlurHandler} className={`profile__input ${nameError ? 'error' : ''}`} />
 						</label>
+						<span className={`auth-form__error-message ${nameError ? 'show' : ''}`}>Имя должно отличатся от действующего и быть не менее 2 символов</span>
 						<label htmlFor="profile-email" className="profile__label">
 							E-mail
 							<input
 								placeholder="email"
 								type="email"
 								id="profile-email"
-								className="profile__input"
+								className={`profile__input ${emailError ? 'error' : ''}`}
 								value={email}
 								onChange={e => setEmail(e.target.value)}
 								disabled={context.loading}
 								onBlur={emailBlurHandler}
+								onFocus={e => setEmailError(false)}
 							/>
 						</label>
+						<span className={`auth-form__error-message ${emailError ? 'show' : ''}`}>Введён некорректный емайл</span>
 					</div>
 
 					<div className="profile__control">

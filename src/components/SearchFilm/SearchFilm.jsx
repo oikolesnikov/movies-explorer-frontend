@@ -6,7 +6,7 @@ import { getMovies } from '../../utils/MoviesApi';
 import { useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify';
 
-const SearchFilm = ({ className = '' }) => {
+const SearchFilm = ({ className = '', setSearch }) => {
 
 	const context = useContext(AppContext);
 	const location = useLocation();
@@ -16,6 +16,7 @@ const SearchFilm = ({ className = '' }) => {
 	const ref = useRef();
 
 	const [searchString, setSearchString] = useState(path ? context.searchString : '');
+	const [error, setError] = useState(false)
 
 	const searchHandler = async (e) => {
 		e.preventDefault()
@@ -24,7 +25,10 @@ const SearchFilm = ({ className = '' }) => {
 			if (path) {
 				if (!searchString) {
 					ref.current.focus()
-					return toast('Нужно ввести ключевое слово');
+					setError(true)
+					return;
+				} else {
+					setError(false)
 				}
 				context.setSearchString(searchString);
 				localStorage.setItem('search', JSON.stringify(searchString))
@@ -49,21 +53,7 @@ const SearchFilm = ({ className = '' }) => {
 						})
 				}
 			} else {
-				if (!searchString) {
-					context.setFilteredLikes([...context.likedMovies])
-				}
-				context.setFilteredLikes(prev => {
-					return context.likedMovies.filter(movie => {
-						if (movie.nameRU.toLowerCase().includes(searchString.toLowerCase()) > 0
-							|| movie.nameEN.toLowerCase().includes(searchString.toLowerCase()) > 0) {
-							if (movie.duration <= 40) {
-								return movie
-							} else {
-								return movie
-							}
-						}
-					})
-				})
+				setSearch(searchString)
 			}
 		} catch (e) {
 			context.setLoading(false);
@@ -79,8 +69,7 @@ const SearchFilm = ({ className = '' }) => {
 	return (
 		<section className={`search-film search-film_position ${className} container`}>
 			<form className="search-film__form">
-				<input type="text" placeholder="Фильм" className="search-film__input" required value={searchString} onChange={(e) => setSearchString(e.target.value)} ref={ref} disabled={context.loading} />
-
+				<input type="text" placeholder="Фильм" className="search-film__input" required value={searchString} onChange={(e) => setSearchString(e.target.value)} ref={ref} disabled={context.loading}/>
 				<button onClick={e => searchHandler(e)} className="search-film__button" disabled={context.loading}>
 					<svg width="7" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
@@ -93,6 +82,7 @@ const SearchFilm = ({ className = '' }) => {
 					</svg>
 				</button>
 			</form>
+				<span className={`auth-form__error-message ${error ? 'show' : ''}`}>Нужно ввести ключевое слово</span>
 			<ShortFilmFilter />
 		</section>
 	);

@@ -45,6 +45,7 @@ const MoviesCard = (movie) => {
 						return history.push('/')
 					} else {
 						context.setLikedMovies([...context.likedMovies.filter(movie => movie.nameRU !== res.nameRU)]);
+						// context.setFilteredLikes(prev => [...prev.filter(e => e.nameRU !== res.nameRU)])
 					}
 
 					return res;
@@ -77,8 +78,10 @@ const MoviesCard = (movie) => {
 	return (
 		<li key={movie.id || movie.movieId} className="movies-card" >
 			<a href={movie.trailerLink} target='_blank' className="movies-card_link">
-				<img src={pathname === '/movies' ? "https://api.nomoreparties.co" + movie.image.formats.thumbnail.url : movie.image}
+				<img src={typeof movie.image === 'object' ? "https://api.nomoreparties.co" + movie.image.formats.thumbnail.url : movie.image}
 					alt={`${movie.nameRU}_${movie.id || movie.movieId}`} className="movies-card__img" />
+				{/* <img src={pathname === '/movies' ? "https://api.nomoreparties.co" + movie.image.formats.thumbnail.url : movie.image}
+					alt={`${movie.nameRU}_${movie.id || movie.movieId}`} className="movies-card__img" /> */}
 				<div className="movies-card__description-wrapper">
 					<h2 className="movies-card__title">{movie.nameRU}</h2>
 					<span className="movies-card__duration">{Math.floor(movie.duration / 60)}ч {Math.floor(movie.duration - Math.floor(movie.duration / 60) * 60)}м</span>

@@ -90,8 +90,6 @@ export const CurrentUserContext = ({ loading = false, error = '', currentUserDat
     }
   }, [])
 
-
-
   return <AppContext.Provider value={{ loading: loadingStatus, error: errorStatus, currentUser, setCurrentUser, setLoading, setError, searchString, setSearchString, movies, setMovies, shorts, setShorts, likedMovies, setLikedMovies, filtered: filteredMovie, setFilteredMovie, savedShorts: savedShortsFlag, setSavedShortsFlag, filteredLikes: filteredLikesMovies, setFilteredLikes: setFilteredLikesMovies }}>
     {children},
   </AppContext.Provider>;

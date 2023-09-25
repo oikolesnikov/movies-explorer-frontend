@@ -103,7 +103,6 @@ const Movies = () => {
       }, 5000)
     }
   }, [context.error])
-
   return (
     <main className="movies">
       <>

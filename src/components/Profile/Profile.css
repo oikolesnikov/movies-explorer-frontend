@@ -92,6 +92,21 @@
 	color: var(--input-error-color);
 }
 
+.auth-form__error-message {
+	display: none;
+	margin-top: 4px;
+	font-size: 10px;
+	line-height: 1.2;
+	color: var(--input-error-color);
+}
+
+.show {
+	display: block;
+}
+.error {
+	color: red;
+	border: 1px solid red
+}
 @media screen and (max-width: 768px) {
 	.profile__container {
 		margin-top: 21vh;

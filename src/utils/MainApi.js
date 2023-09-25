@@ -85,14 +85,6 @@ export const getLiked = async (context) => {
     } else {
       return await res.json();
     }
-  }).then(res => {
-    context.setLoading(false);
-    return res;
-  }).catch(e => {
-    console.error(e);
-    context.setLoading(false);
-    context.setError(e.message);
-    return e;
   })
 }
 
@@ -125,14 +117,6 @@ export const addLike = async (movie, context) => {
     } else {
       return await res.json();
     }
-  }).then(res => {
-    context.setLoading(false);
-    return res;
-  }).catch(e => {
-    console.error(e);
-    context.setLoading(false);
-    context.setError(e.message);
-    return e;
   })
 }
 
@@ -153,13 +137,5 @@ export const deleteLiked = async (id, context) => {
     } else {
       return await res.json();
     }
-  }).then(res => {
-    context.setLoading(false);
-    return res;
-  }).catch(e => {
-    console.error(e);
-    context.setLoading(false);
-    context.setError(e.message);
-    return e;
   })
 }
